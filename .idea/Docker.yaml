@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  selenium-hub:
+    image: selenium/hub
+    container_name: selenium-hub
+    ports:
+      - 4444:4444
+    environment:
+      - TZ=Europe/Amsterdam
+      - GRID_TIMEOUT=90
+  chrome:
+    image: selenium/node-chrome-debug
+    ports:
+      - 5901-5950:5900
+    restart: always
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=selenium-hub
+      - HUB_PORT_4444_TCP_PORT=4444
+      - TZ=Europe/Amsterdam
+      - SCREEN_WIDTH=1600
+      - SCREEN_HEIGHT=900
+    volumes:
+      - ./shared:/tmp/shared
+      - ./src/main/resources:/tmp/resources
+    privileged: true
+  firefox:
+    image: selenium/node-firefox-debug
+    ports:
+      - 5950-5999:5900
+    restart: always
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=selenium-hub
+      - HUB_PORT_4444_TCP_PORT=4444
+      - TZ=Europe/Amsterdam
+      - SCREEN_WIDTH=1600
+      - SCREEN_HEIGHT=900
+    volumes:
+      - ./shared:/tmp/shared
+      - ./src/main/resources:/tmp/resources
+    privileged: true
