@@ -39,3 +39,7 @@
 4) Click apply and save it
 5) Repeat above steps to create another maven configuration with command line as 'clean install site -DsuiteFile=api_regression.xml'
 
+**How to run tests:**
+
+1)src->test->java->projects->APITest click run button
+2)There are 3 test cases which explained in the code

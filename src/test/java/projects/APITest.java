@@ -12,7 +12,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.yandex.qatools.allure.annotations.Description;
 
-public class BackEndTest {
+public class APITest {
 
   @Test
   @Description("Create Workflow")
