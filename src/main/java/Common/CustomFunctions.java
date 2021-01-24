@@ -1,4 +1,4 @@
-package Backend.java;
+package Common;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertNotNull;
@@ -12,25 +12,23 @@ public class CustomFunctions {
   @Step("This method is to generate Bearer Token for Authentication")
   public static String generateBearerToken() {
 
-    final String clientId = "OmrSmncProject";
-    final String clientSecret = "375a01f38e158ecdd5843faacb302276";
+    final String projectId = "078bd9dc-fb15-494c-a286-25cbcd718328";
+    final String projectIdKey = "3nXudF5M.KCM4Nzx0w8PDDwhesN2OrdAP7KN8WJ0s4Re";
 
-    final String token = getAuthTokenWithClientIdAndSecret(clientId, clientSecret);
+    final String token = getAuthToken(projectId, projectIdKey);
     log("Bearer token generated successfully");
     return token;
   }
 
-  public static String getAuthTokenWithClientIdAndSecret(
-      String clientId, String clientSecret) {
+  public static String getAuthToken(
+      String projectId, String projectIdKey) {
 
-    final String host = "http://coop.apps.symfonycasts.com/token";
+    final String host = "https://"+projectId+":"+projectIdKey+"@api.up42.com/oauth/token";
 
     Response response =
         given()
-            .auth()
-            .preemptive()
-            .basic(clientId, clientSecret)
-            .formParam("grant_type", "client_credentials")
+            .contentType("application/x-www-form-urlencoded")
+            .body("grant_type=client_credentials")
             .when()
             .post(host)
             .then()

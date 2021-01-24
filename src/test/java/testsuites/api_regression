@@ -1,8 +1,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Takeaway - BackEndTest" parallel="methods" thread-count="4">
+<suite name="BackEndTest" parallel="methods" thread-count="2">
 
-  <test name="Takeaway - BackEndTest">
+  <test name="BackEndTest">
 
 
     <classes>

@@ -1,8 +1,12 @@
 package projects;
 
-import static Backend.java.CustomFunctions.generateBearerToken;
+import static Backend.java.request.WorkflowRequests.deleteWorkflow;
+import static Backend.java.request.WorkflowRequests.getWorkflowJobs;
+import static Backend.java.utils.Helpers.getJobId;
+import static Backend.java.utils.Helpers.getWorkflowId;
+import static Common.CustomFunctions.generateBearerToken;
 
-import Backend.java.Request;
+import Backend.java.request.WorkflowRequests;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,91 +15,70 @@ import ru.yandex.qatools.allure.annotations.Description;
 public class BackEndTest {
 
   @Test
-  @Description("Verify Unlock the Barn")
-  public void testBarnUnlock() {
+  @Description("Create Workflow")
+  public void testCreatingWorkflow() {
     final String bearerToken = generateBearerToken();
-
+//Create Workflow
     Response response =
-        Request.barnUnlock(bearerToken);
+        WorkflowRequests.createWorkflow(bearerToken, "QA coding challenge workflow", "Workflow description");
     int statusCode = response.getStatusCode();
-    Assert.assertEquals(statusCode,200,"Unlock the Barn is successful!");
+    Assert.assertEquals(statusCode,200,"QA coding challenge workflow is not created!");
+//Delete Workflow
+    final String workflowId = getWorkflowId(response);
+    response = deleteWorkflow(bearerToken, workflowId);
+    statusCode = response.getStatusCode();
+    Assert.assertEquals(statusCode,204,"Deleting Workflow jobs request is not successful!");
   }
 
   @Test
-  @Description("Verify Unlock the Barn success response")
-  public void testBarnUnlockResponseVerification() {
+  @Description("Create Workflow Task")
+  public void testCreatingWorkflowTask() {
     final String bearerToken = generateBearerToken();
-
+//Create Workflow
     Response response =
-        Request.barnUnlock(bearerToken);
-    String responseString = response.asString();
-    Assert.assertTrue(responseString.contains("true"),"Success response is Correct!");
-  }
-
-  @Test
-  @Description("Verify Put the Toilet Seat Down")
-  public void testToiletSeatDown() {
-    final String bearerToken = generateBearerToken();
-
-    Response response =
-        Request.toiletSeatDown(bearerToken);
+        WorkflowRequests.createWorkflow(bearerToken, "QA coding challenge workflow", "Workflow description");
     int statusCode = response.getStatusCode();
-    Assert.assertEquals(statusCode,200,"Put the Toilet Seat Down is successful!");
+    Assert.assertEquals(statusCode,200,"QA coding challenge workflow is not created!");
+//Add Task to Workflow
+    final String workflowId = getWorkflowId(response);
+    response =
+        WorkflowRequests.createWorkflowTask(bearerToken, workflowId);
+    statusCode = response.getStatusCode();
+    Assert.assertEquals(statusCode,200,"Creating Workflow task request is not successful!");
+//Delete Workflow
+    response = deleteWorkflow(bearerToken, workflowId);
+    statusCode = response.getStatusCode();
+    Assert.assertEquals(statusCode,204,"Deleting Workflow jobs request is not successful!");
   }
 
   @Test
-  @Description("Verify Put the Toilet Seat Down success response")
-  public void testToiletSeatDownResponseVerification() {
+  @Description("Create Workflow Jobs")
+  public void testCreatingWorkflowJobs() {
     final String bearerToken = generateBearerToken();
-
+//Create Workflow
     Response response =
-        Request.toiletSeatDown(bearerToken);
-    String responseString = response.asString();
-    Assert.assertTrue(responseString.contains("true"),"Success response is Correct!");
-  }
-
-  @Test
-  @Description("Verify Feed Your Chickens")
-  public void testChickensFeed() {
-    final String bearerToken = generateBearerToken();
-
-    Response response =
-        Request.chickensFeed(bearerToken);
+        WorkflowRequests.createWorkflow(bearerToken, "QA coding challenge workflow", "Workflow description");
     int statusCode = response.getStatusCode();
-    Assert.assertEquals(statusCode,200,"Feed Your Chickens is successful!");
+    Assert.assertEquals(statusCode,200,"QA coding challenge workflow is not created!");
+//Add Task to Workflow
+    final String workflowId = getWorkflowId(response);
+    response =
+        WorkflowRequests.createWorkflowTask(bearerToken, workflowId);
+    statusCode = response.getStatusCode();
+    Assert.assertEquals(statusCode,200,"Creating Workflow task request is not successful!");
+//Create and Run a Job
+    response =
+        WorkflowRequests.createWorkflowJobs(bearerToken, workflowId);
+    statusCode = response.getStatusCode();
+    Assert.assertEquals(statusCode,200,"Creating Workflow jobs request is not successful!");
+//Get the Job for verification
+    final String jobId = getJobId(response);
+    response = getWorkflowJobs(bearerToken, jobId);
+    statusCode = response.getStatusCode();
+    Assert.assertEquals(statusCode,200,"Getting Workflow jobs request is not successful!");
+//Delete Workflow
+    response = deleteWorkflow(bearerToken, workflowId);
+    statusCode = response.getStatusCode();
+    Assert.assertEquals(statusCode,204,"Deleting Workflow jobs request is not successful!");
   }
-
-  @Test
-  @Description("Verify Feed Your Chickens success response")
-  public void testChickensFeedResponseVerification() {
-    final String bearerToken = generateBearerToken();
-
-    Response response =
-        Request.chickensFeed(bearerToken);
-    String responseString = response.asString();
-    Assert.assertTrue(responseString.contains("true"),"Success response is Correct!");
-  }
-
-  @Test
-  @Description("Verify Collect Eggs from Your Chickens")
-  public void testEggsCollect() {
-    final String bearerToken = generateBearerToken();
-
-    Response response =
-        Request.eggsCollect(bearerToken);
-    int statusCode = response.getStatusCode();
-    Assert.assertEquals(statusCode,200,"Collect Eggs from Your Chickens is successful!");
-  }
-
-  @Test
-  @Description("Verify Collect Eggs from Your Chickens success response")
-  public void testEggsCollectResponseVerification() {
-    final String bearerToken = generateBearerToken();
-
-    Response response =
-        Request.eggsCollect(bearerToken);
-    String responseString = response.asString();
-    Assert.assertTrue(responseString.contains("true"),"Success response is Correct!");
-  }
-
 }
