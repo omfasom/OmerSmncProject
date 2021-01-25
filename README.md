@@ -39,7 +39,15 @@
 4) Click apply and save it
 5) Repeat above steps to create another maven configuration with command line as 'clean install site -DsuiteFile=api_regression.xml'
 
+
+**Test Framework Structure:**
+
+1) Created JSON payload based on serialization in Java8 and RestAssured Library 
+2) Java file in main file divided into 2 file Backend.java and Common
+3) Backend.java consist of builder, model, payload, request, resource, utils
+
+
 **How to run tests:**
 
-1)src->test->java->projects->APITest click run button
-2)There are 3 test cases which explained in the code
+1) src->test->java->projects->APITest click run button
+2) There are 3 test cases which explained in the code
