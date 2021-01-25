@@ -1,6 +1,7 @@
 package Backend.java.utils;
 
 import static Common.Logger.logInfo;
+
 import io.restassured.response.Response;
 
 public class Helpers {
@@ -16,5 +17,4 @@ public class Helpers {
     logInfo(String.format("Workflow Id is successfully retrieved %s", workflowId));
     return workflowId;
   }
-
 }

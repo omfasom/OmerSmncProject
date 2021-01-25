@@ -20,10 +20,9 @@ public class CustomFunctions {
     return token;
   }
 
-  public static String getAuthToken(
-      String projectId, String projectIdKey) {
+  public static String getAuthToken(String projectId, String projectIdKey) {
 
-    final String host = "https://"+projectId+":"+projectIdKey+"@api.up42.com/oauth/token";
+    final String host = "https://" + projectId + ":" + projectIdKey + "@api.up42.com/oauth/token";
 
     Response response =
         given()
@@ -36,15 +35,12 @@ public class CustomFunctions {
             .extract()
             .response();
 
-
     final String accessToken = response.path("access_token");
-    final String tokenType =  response.path("token_type");
+    final String tokenType = response.path("token_type");
 
     assertNotNull(accessToken, "access_token cannot be null");
     assertNotNull(tokenType, "token_type cannot be null");
 
     return accessToken;
   }
-
-
 }

@@ -25,6 +25,4 @@ public class WorkflowPayloads {
     Workflow workflow = createWorkflowJobs();
     return WorkflowJobsBuilder.getJsonPayload(workflow);
   }
-
-
 }

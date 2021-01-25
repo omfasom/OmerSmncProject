@@ -51,3 +51,4 @@
 
 1) src->test->java->projects->APITest click run button
 2) There are 3 test cases which explained in the code
+3) In order to do maven run -> choose working directory, enter "clean install" to command line

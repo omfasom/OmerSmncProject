@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkflowTaskBuilder {
-  public static  String getJsonPayload(List<Workflow> workflowList){
+  public static String getJsonPayload(List<Workflow> workflowList) {
     Gson gson = new Gson();
     return gson.toJson(workflowList);
   }
 
-  public static List<Workflow> createWorkflowTask(){
+  public static List<Workflow> createWorkflowTask() {
     List<Workflow> workflowList = new ArrayList<>();
     Workflow workflow1 = new Workflow();
     workflow1.setName("nasa-modis:1");
@@ -25,9 +25,5 @@ public class WorkflowTaskBuilder {
     workflow2.setBlockId("e374ea64-dc3b-4500-bb4b-974260fb203e");
     workflowList.add(workflow2);
     return workflowList;
-
   }
-
-
-
 }

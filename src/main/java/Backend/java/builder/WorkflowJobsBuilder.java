@@ -8,19 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkflowJobsBuilder {
-  public static  String getJsonPayload(Workflow workflow){
+  public static String getJsonPayload(Workflow workflow) {
     Gson gson = new Gson();
     return gson.toJson(workflow, Workflow.class);
   }
 
-  public static Workflow createWorkflowJobs(){
+  public static Workflow createWorkflowJobs() {
     Workflow workflow = new Workflow();
     createNasaModis(workflow);
     createSharpening(workflow);
     return workflow;
   }
 
-  public static void createNasaModis(Workflow workflow){
+  public static void createNasaModis(Workflow workflow) {
     NasaModis1 nasaModis = new NasaModis1();
     nasaModis.setTime("2018-12-01T00:00:00+00:00/2020-12-31T23:59:59+00:00");
     nasaModis.setLimit(1);
@@ -35,17 +35,11 @@ public class WorkflowJobsBuilder {
     bbox.add(52.510455);
     nasaModis.setBbox(bbox);
     workflow.setNasaModis1(nasaModis);
-
   }
 
-
-  public static void createSharpening(Workflow workflow){
+  public static void createSharpening(Workflow workflow) {
     Sharpening1 sharpening = new Sharpening1();
     sharpening.setStrength("medium");
     workflow.setSharpening1(sharpening);
-
   }
-
-
-
 }
